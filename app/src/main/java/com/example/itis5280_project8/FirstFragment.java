@@ -31,6 +31,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
+import java.util.Locale;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -179,6 +180,7 @@ public class FirstFragment extends Fragment {
             }
 
             getItems(Globals.blueCatsToRegionMap.get(previousBeaconName));
+            getActivity().setTitle(Globals.blueCatsToRegionMap.get(previousBeaconName).toUpperCase(Locale.US) + " Aisle " + " Items");
             for (Item item : items) {
                 Log.d(TAG, item.getName() + " " + item.getPhoto());
             }

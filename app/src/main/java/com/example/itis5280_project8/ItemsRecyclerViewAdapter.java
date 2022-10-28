@@ -42,7 +42,7 @@ public class ItemsRecyclerViewAdapter extends RecyclerView.Adapter<ItemsRecycler
         String url = item.getPhoto();
 
         Picasso.get()
-                .load("https://drive.google.com/uc?id=169iWjRgeiz18-lIXdBIDq0Z18yrpUMcA")
+                .load(url)
                 .placeholder(R.drawable.ic_outline_downloading_24)
                 .into(holder.imageViewItemPhoto);
     }
