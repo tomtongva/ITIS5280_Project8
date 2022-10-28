@@ -61,7 +61,6 @@ public class FirstFragment extends Fragment {
 
         binding = FragmentFirstBinding.inflate(inflater, container, false);
 
-        getActivity().setTitle("Aisle Items");
         layoutManager = new LinearLayoutManager(getActivity());
         binding.recyclerView.setLayoutManager(layoutManager);
 
@@ -89,6 +88,9 @@ public class FirstFragment extends Fragment {
                 .build();
 
         retrofitInterface = retrofit.create(RetrofitInterface.class);
+
+        getActivity().setTitle("All Aisle Items");
+        getItems("");
 
         requestBlePermissions(getActivity(), 001);
 
