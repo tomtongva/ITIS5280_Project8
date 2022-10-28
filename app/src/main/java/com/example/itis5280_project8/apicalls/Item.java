@@ -4,9 +4,10 @@ import java.io.Serializable;
 import java.util.Objects;
 
 public class Item implements Serializable {
-    String _id, name, photo, region;
+    String name, photo;
     Double price;
     Integer discount;
+    Integer quantity = 1;
 
     public Item() {
         // empty
@@ -51,37 +52,46 @@ public class Item implements Serializable {
         this.discount = discount;
     }
 
+    public Integer getQuantity() {
+        return quantity;
+    }
+
+    public void setQuantity(Integer quantity) {
+        this.quantity = quantity;
+    }
+
     public Double getDiscountedPrice() {
         double discountedPrice = price - (price * ((double)discount / 100));
         return Math.round(discountedPrice * 100.0) / 100.0;
     }
 
-    public String get_id() {
-        return _id;
+    public Double getTotalCost() {
+        double totalCost = getDiscountedPrice() * quantity;
+        return Math.round(totalCost * 100.0) / 100.0;
     }
 
-    public void set_id(String _id) {
-        this._id = _id;
-    }
-
-    public String getRegion() {
-        return region;
-    }
-
-    public void setRegion(String region) {
-        this.region = region;
-    }
 
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Item item = (Item) o;
-        return _id.equals(item._id) && name.equals(item.name) && photo.equals(item.photo) && region.equals(item.region) && price.equals(item.price) && discount.equals(item.discount);
+        return Objects.equals(name, item.name) && Objects.equals(photo, item.photo) && Objects.equals(price, item.price) && Objects.equals(discount, item.discount);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(_id, name, photo, region, price, discount);
+        return Objects.hash(name, photo, price, discount);
+    }
+
+    @Override
+    public String toString() {
+        return "Item{" +
+                "name='" + name + '\'' +
+                ", photo='" + photo + '\'' +
+                ", price=" + price +
+                ", discount=" + discount +
+                ", quantity=" + quantity +
+                '}';
     }
 }

@@ -45,4 +45,5 @@ dependencies {
     implementation 'org.mongodb:mongodb-driver-reactivestreams:4.1.1'
     implementation 'com.squareup.retrofit2:retrofit:2.3.0'
     implementation 'com.squareup.retrofit2:converter-gson:2.3.0'
+    implementation 'com.squareup.picasso:picasso:2.8'
 }
