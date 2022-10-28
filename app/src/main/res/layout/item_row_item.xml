@@ -10,17 +10,18 @@
         android:id="@+id/textViewItemDiscountedPrice"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginEnd="16dp"
         android:text="$10.00"
         android:textColor="#4CAF50"
         android:textStyle="bold"
-        app:layout_constraintEnd_toStartOf="@+id/imageViewAddItem"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="@+id/textViewItemPrice"
         app:layout_constraintTop_toBottomOf="@+id/textViewItemPrice" />
 
     <ImageView
         android:id="@+id/imageViewItemPhoto"
         android:layout_width="50dp"
         android:layout_height="50dp"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         tools:srcCompat="@tools:sample/avatars" />
@@ -42,11 +43,10 @@
         android:id="@+id/textViewItemPrice"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginEnd="16dp"
         android:text="$10.00"
         android:textColor="@color/black"
         android:textSize="12sp"
-        app:layout_constraintEnd_toStartOf="@+id/imageViewAddItem"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/textViewItemDiscount" />
 
     <TextView
@@ -57,14 +57,6 @@
         android:textColor="#F44336"
         android:textSize="12sp"
         app:layout_constraintEnd_toEndOf="@+id/textViewItemPrice"
-        app:layout_constraintTop_toTopOf="@+id/imageViewItemPhoto" />
-
-    <ImageView
-        android:id="@+id/imageViewAddItem"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        app:layout_constraintBottom_toBottomOf="@+id/imageViewItemPhoto"
-        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="@+id/imageViewItemPhoto" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

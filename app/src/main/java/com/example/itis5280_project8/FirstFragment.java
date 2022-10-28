@@ -64,7 +64,6 @@ public class FirstFragment extends Fragment {
         layoutManager = new LinearLayoutManager(getActivity());
         binding.recyclerView.setLayoutManager(layoutManager);
 
-        Log.d(TAG, "items at the top " + items);
         itemsRecyclerViewAdapter = new ItemsRecyclerViewAdapter(items);
         binding.recyclerView.setAdapter(itemsRecyclerViewAdapter);
 
@@ -169,22 +168,28 @@ public class FirstFragment extends Fragment {
                     beacons.remove(index);
             }
 
+            boolean previousBeaconNameChanged = false;
             for (BCBeacon currentBeacon : beacons) {
                 Log.d(TAG, currentBeacon.getName() + " proximity:" + currentBeacon.getProximity().getValue()
                         + " total array size:" + beacons.size());
 
                 if (currentBeacon.getProximity().getValue() < previousRegionProximity || currentBeacon.getProximity().getValue() < prevBeaconCurrentProximityVal) {
                     previousRegionProximity = currentBeacon.getProximity().getValue();
+
+                    if (!previousBeaconName.equalsIgnoreCase(currentBeacon.getName()))
+                        previousBeaconNameChanged = true;
                     previousBeaconName = currentBeacon.getName();
                 }
 
                 Log.d(TAG, "current beacon " + previousBeaconName + " at proximity " + previousRegionProximity);
             }
 
-            getItems(Globals.blueCatsToRegionMap.get(previousBeaconName));
-            getActivity().setTitle(Globals.blueCatsToRegionMap.get(previousBeaconName).toUpperCase(Locale.US) + " Aisle " + " Items");
-            for (Item item : items) {
-                Log.d(TAG, item.getName() + " " + item.getPhoto());
+            if (previousBeaconNameChanged) {
+                getItems(Globals.blueCatsToRegionMap.get(previousBeaconName));
+                getActivity().setTitle(Globals.blueCatsToRegionMap.get(previousBeaconName).toUpperCase(Locale.US) + " Aisle " + " Items");
+                for (Item item : items) {
+                    Log.d(TAG, item.getName() + " " + item.getPhoto());
+                }
             }
             super.didRangeBlueCatsBeacons(beacons);
         }
@@ -199,7 +204,9 @@ public class FirstFragment extends Fragment {
                 ItemResponse itemResponse = response.body();
 
                 if (itemResponse != null && itemResponse.getItemsArray() != null) {
-                    items = new ArrayList<>(Arrays.asList(itemResponse.getItemsArray()));
+//                    items = new ArrayList<>(Arrays.asList(itemResponse.getItemsArray()));
+                    items.clear();
+                    items.addAll(Arrays.asList(itemResponse.getItemsArray()));
                     Log.d(TAG, "items " + items.toString());
                     PutDataIntoRecyclerView(items);
 //                    binding.textView.setText(items.get(0).getName());
@@ -215,10 +222,16 @@ public class FirstFragment extends Fragment {
     }
 
     private void PutDataIntoRecyclerView(ArrayList<Item> itemList) {
-        itemsRecyclerViewAdapter = new ItemsRecyclerViewAdapter(itemList);
+//        itemsRecyclerViewAdapter = new ItemsRecyclerViewAdapter(itemList);
 
         Log.d(TAG, "items are " + itemList);
-        binding.recyclerView.setAdapter(itemsRecyclerViewAdapter);
+//        binding.recyclerView.setAdapter(itemsRecyclerViewAdapter);
+        getActivity().runOnUiThread(new Runnable() {
+            @Override
+            public void run() {
+                itemsRecyclerViewAdapter.notifyDataSetChanged();
+            }
+        });
     }
 
 }
