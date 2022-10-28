@@ -16,14 +16,9 @@ import com.squareup.picasso.Callback;
 import com.squareup.picasso.Picasso;
 import com.squareup.picasso.RequestCreator;
 
-import java.io.IOException;
 import java.util.List;
-import java.util.concurrent.Executors;
 
-import okhttp3.Request;
-import okhttp3.Response;
-
-public class ItemsRecyclerViewAdapter extends RecyclerView.Adapter<ItemsRecyclerViewAdapter.ContactsViewHolder> {
+public class ItemsRecyclerViewAdapter extends RecyclerView.Adapter<ItemsRecyclerViewAdapter.ItemsViewHolder> {
     List<Item> items;
 
     public ItemsRecyclerViewAdapter(List<Item> items) {
@@ -32,14 +27,14 @@ public class ItemsRecyclerViewAdapter extends RecyclerView.Adapter<ItemsRecycler
 
     @NonNull
     @Override
-    public ContactsViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+    public ItemsViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_row_item, parent, false);
-        ContactsViewHolder viewHolder = new ContactsViewHolder(view);
+        ItemsViewHolder viewHolder = new ItemsViewHolder(view);
         return viewHolder;
     }
 
     @Override
-    public void onBindViewHolder(@NonNull ContactsViewHolder holder, int position) {
+    public void onBindViewHolder(@NonNull ItemsViewHolder holder, int position) {
         Item item = items.get(position);
         holder.item = item;
 
@@ -81,7 +76,7 @@ public class ItemsRecyclerViewAdapter extends RecyclerView.Adapter<ItemsRecycler
         return items.size();
     }
 
-    public class ContactsViewHolder extends RecyclerView.ViewHolder {
+    public class ItemsViewHolder extends RecyclerView.ViewHolder {
         ImageView imageViewItemPhoto;
         TextView textViewItemName;
         TextView textViewItemPrice;
@@ -91,7 +86,7 @@ public class ItemsRecyclerViewAdapter extends RecyclerView.Adapter<ItemsRecycler
         int position;
         Item item;
 
-        public ContactsViewHolder(@NonNull View itemView) {
+        public ItemsViewHolder(@NonNull View itemView) {
             super(itemView);
             imageViewItemPhoto = itemView.findViewById(R.id.imageViewItemPhoto);
             textViewItemName = itemView.findViewById(R.id.textViewItemName);
