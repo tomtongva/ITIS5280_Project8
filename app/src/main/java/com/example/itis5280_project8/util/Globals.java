@@ -4,8 +4,9 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class Globals {
-    //public static final String URL = "https://project4-5280-server.herokuapp.com";
-    public static final String URL = "http://192.168.86.32:8080";
+    public static final String URL = "https://project8-5280.herokuapp.com/";
+    //public static final String URL = "http://192.168.86.32:8080";
+    //public static final String URL = "http://10.178.176.213:8080";
 
     public static final String BlueCatsToken = "06e8c088-fae4-419c-aeb6-c56e8def1c42";
 

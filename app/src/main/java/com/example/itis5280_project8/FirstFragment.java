@@ -47,6 +47,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
@@ -113,7 +114,12 @@ public class FirstFragment extends Fragment {
         requestBlePermissions(getActivity(), 001);
 
         BlueCatsSDK.startPurringWithAppToken(getContext(), Globals.BlueCatsToken);
-
+        final Map<String, String> options = new HashMap<>();
+        options.put(BlueCatsSDK.BC_OPTION_CACHE_REFRESH_TIME_INTERVAL_IN_MILLISECONDS, "10");
+        options.put(BlueCatsSDK.BC_OPTION_CACHE_SITES_NEARBY_BY_LOCATION, "true");
+        options.put(BlueCatsSDK.BC_OPTION_DISCOVER_BEACONS_NEARBY, "true");
+        options.put(BlueCatsSDK.BC_OPTION_MONITOR_ALL_AVAILABLE_REGIONS_ON_STARTUP, "true");
+        BlueCatsSDK.setOptions(options);
         final BCBeaconManager beaconManager = new BCBeaconManager();
         beaconManager.registerCallback(mBeaconManagerCallback);
     }
@@ -171,6 +177,9 @@ public class FirstFragment extends Fragment {
 
         @Override
         public void didRangeBlueCatsBeacons(List<BCBeacon> beacons) {
+            for (BCBeacon beacon : beacons) {
+                Log.d(TAG, "existing beacon " + beacon.getName() + " " + beacon.getProximity().getValue());
+            }
             if (AddBeaconForTestingUtil.TESTING) {
                 ArrayList<BCBeacon.BCProximity> proximities = new ArrayList<>();
                 proximities.add(BCBeacon.BCProximity.BC_PROXIMITY_IMMEDIATE);
@@ -210,7 +219,7 @@ public class FirstFragment extends Fragment {
                         previousBeaconNameChanged = true;
 
                     // now update the beacon the next scan needs to compare to
-                    previousRegionProximity = currentBeacon.getProximity().getValue();
+                    previousRegionProximity = prevBeaconCurrentProximityVal = currentBeacon.getProximity().getValue();
                     previousBeaconName = currentBeacon.getName();
                 }
 
@@ -224,6 +233,8 @@ public class FirstFragment extends Fragment {
                 for (Item item : items) {
                     Log.d(TAG, item.getName() + " " + item.getPhoto());
                 }
+            } else {
+                previousRegionProximity = prevBeaconCurrentProximityVal;
             }
             super.didRangeBlueCatsBeacons(beacons);
         }
